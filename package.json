@@ -1,7 +1,7 @@
 {
-  "name": "grunt-preprocess",
+  "name": "grunt-preprocess-yeoman",
   "description": "Preprocess HTML and JavaScript directives based off environment configuration",
-  "version": "2.3.0",
+  "version": "2.3.2",
   "homepage": "https://github.com/onehealth/grunt-preprocess",
   "author": {
     "name": "Jarrod Overson",

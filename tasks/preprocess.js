@@ -47,15 +47,17 @@ function init(grunt) {
           grunt.file.write(src, processed);
         });
       } else {
-        var src = fileObj.src[0];
-        var dest = grunt.template.process(fileObj.dest);
-        var cwd = fileObj.cwd || './';
+        fileObj.src.forEach(function(src) {
+          var dest = grunt.template.process(fileObj.dest);
+          var cwd = fileObj.cwd || './';
 
-        var srcText = grunt.file.read(path.join(cwd, src));
-        context.src = src;
-        context.srcDir = path.dirname(src);
-        var processed = preprocess.preprocess(srcText, context, getExtension(src));
-        grunt.file.write(path.join(dest, src), processed);
+          var srcText = grunt.file.read(path.join(cwd, src));
+          context.src = src;
+          context.srcDir = path.dirname(src);
+          var processed = preprocess.preprocess(srcText, context, getExtension(src));
+
+          grunt.file.write(path.join(dest, src), processed);
+        });
       }
     });
   });
