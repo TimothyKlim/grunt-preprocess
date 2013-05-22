@@ -47,7 +47,9 @@ function init(grunt) {
           grunt.file.write(src, processed);
         });
       } else {
-        fileObj.src.forEach(function(src) {
+        var files;
+
+        var process = function(src, dst) {
           var dest = grunt.template.process(fileObj.dest);
           var cwd = fileObj.cwd || './';
 
@@ -56,8 +58,20 @@ function init(grunt) {
           context.srcDir = path.dirname(src);
           var processed = preprocess.preprocess(srcText, context, getExtension(src));
 
-          grunt.file.write(path.join(dest, src), processed);
-        });
+          grunt.file.write(path.join(dest, dst || src), processed);
+        }
+
+        if (fileObj.src) {
+          files = fileObj.src;
+          files.forEach(function(src) {
+            process(src, files[src]);
+          });
+        } else {
+          files = fileObj.files;
+          Object.keys(files).forEach(function(src) {
+            process(src, files[src]);
+          });
+        }
       }
     });
   });
